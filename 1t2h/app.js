@@ -1,80 +1,52 @@
-var option1=document.getElementById('option1');
-var option2=document.getElementById('option2');
-var option3=document.getElementById('option3');
-var clicked=false;
+var option1 = document.getElementById("option1");
+var option2 = document.getElementById("option2");
+var option3 = document.getElementById("option3");
 
 var question = {
-    options: [
-      'The Son is always subordinate to the Father', 
-      'God is the Father, the Son, and the Holy Spirit but each are different persons', 
-      'The Father, Son, and Holy Spirit are all the same and equally God'
-    ],
-    solution: 'option2',
-    explanation: 'The Son is equally God and was subordinate to the Father while in the flesh to represent the relationship between humans and God but since he is fully God and fully human he is not subordinate to the Father forever. The Father, Son, and Holy Spirit are distinct persons but all equally God. Hence Option 2 is correct.'
-  }
+  options: [
+    ["Jesus has 2 different souls", "Two natures were united in One person which was Jesus. (Hypostatic Union) Jesus was truly God and truly man which means he had two different souls."],
+    ["Jesus only has 1 divine soul", "If this was true, He wouldn't have faced human struggles and furthermore he couldn't have been the sacrifice for our sins. Being able to distinguish Heresies is important since it compromises the gospel completely."],
+    ["Jesus has a soul that is neither completely man or God","Jesus was not partially man or partially God. Becoming man did not take away from his divine nature. Being able to distinguish Heresies is important since it compromises the gospel completely."]
+  ],
+  solution: "option1",
+};
 
-option1.innerHTML=question.options[0];
-option2.innerHTML=question.options[1];
-option3.innerHTML=question.options[2];
-explanation.innerHTML=question.explanation;
+option1.innerText = question.options[0][0];
+option2.innerText = question.options[1][0];
+option3.innerText = question.options[2][0];
 
-function check(element){
+var options = [option1, option2, option3];
+
+
+function check(element) {
   id = element.id;
-  var remaining = question.options.slice();
-  const index = remaining.indexOf(element.innerHTML.toString());
-    if (id==question.solution){
-      element.style.backgroundColor = '#9acd32';
-      element.className='finished';
-      remaining.splice(index, 1);
-      for (i = 0; i < remaining.length; i++){
-        if(option1.innerHTML==remaining[i]){
-          option1.style.backgroundColor = '#ff4500';
-          option1.className='finished';
-        }
-        if (option2.innerHTML==remaining[i]){
-          option2.style.backgroundColor = '#ff4500';
-          option2.className='finished';
-        }
-        if (option3.innerHTML==remaining[i]){
-          option3.style.backgroundColor = '#ff4500';
-          option3.className='finished';
-        }
-      }
-    }
-    else{
-      /* 
-      question.solution = 'option2'
-      document.getElementById(question.solution)/objsoln = option2
-      objsoln.innerHTML = 'Jesus is the Savior'
-      */
-      element.style.backgroundColor = '#ff4500';
-      element.className='finished';
-      remaining.splice(index, 1);
-
-      var objsoln = document.getElementById(question.solution);
-      objsoln.style.backgroundColor = '#9acd32';
-      objsoln.className='finished';
-      const sol = remaining.indexOf(objsoln.innerHTML);
-      remaining.splice(sol, 1);
-      
-      if(option1.innerHTML==remaining[0]){
-        option1.style.backgroundColor = '#ff4500';
-        option1.className='finished';
-      }
-      if (option2.innerHTML==remaining[0]){
-        option2.style.backgroundColor = '#ff4500';
-        option2.className='finished';
-      }
-      if (option3.innerHTML==remaining[0]){
-        option3.style.backgroundColor = '#ff4500';
-        option3.className='finished';
-      }
-    }
+  // Make sure this is what I think it is
+  const index = options.indexOf(element);
+  if (id == question.solution) {
+    element.style.backgroundColor = "#9acd32";
+    element.className = "finished";
+    explanation.innerText = question.options[index][1];
+    options.splice(index, 1);
+    options.forEach(function(pizza) { 
+        pizza.style.backgroundColor = "#ff4500";
+        pizza.className = "finished";
+    });
+  } else {
+    options.forEach(function(ele) { 
+      ele.style.backgroundColor = "#ff4500";
+      ele.className = "finished";
+      explanation.innerText = question.options[index][1];
+      var y = document.getElementById("retry");
+      y.style.display = "block";
+    });
+    var objsoln = document.getElementById(question.solution);
+    objsoln.style.backgroundColor = "#9acd32";
+    objsoln.className = "finished";
+  }
 }
 
-function button(element){
-  clicked = true;
+function button(element) {
   check(element);
-  var x = document.getElementById('explanation');
-  x.style.display = 'block';
+  var x = document.getElementById("explanation");
+  x.style.display = "block";
 }
